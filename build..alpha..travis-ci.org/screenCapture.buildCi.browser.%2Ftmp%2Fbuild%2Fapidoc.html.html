@@ -1,4 +1,4 @@
-<div class="apidocDiv">
+<html><head></head><body><div class="apidocDiv">
 <style>
 /*csslint
 */
@@ -47,17 +47,10 @@
 }
 </style>
 <h1>api documentation for
-    <a
-
-        href="https://github.com/ded/express-limiter"
-
-    >express-limiter (v1.6.0)</a>
+    <a href="https://github.com/ded/express-limiter">express-limiter (v1.6.0)</a>
 </h1>
 <h4>rate limiter middleware for express applications</h4>
-<div class="apidocSectionDiv"><a
-    href="#apidoc.tableOfContents"
-    id="apidoc.tableOfContents"
-><h1>table of contents</h1></a><ol>
+<div class="apidocSectionDiv"><a href="#apidoc.tableOfContents" id="apidoc.tableOfContents"><h1>table of contents</h1></a><ol>
 
     <li class="apidocModuleLi"><a href="#apidoc.module.express-limiter">module express-limiter</a><ol>
 
@@ -110,21 +103,21 @@
     <li>description and source-code<pre class="apidocCodePre">express-limiter = function (app, db) {
   return function (opts) {
     var middleware = function (req, res, next) {
-      if (opts.whitelist &#x26;&#x26; opts.whitelist(req)) return next()
+      if (opts.whitelist &amp;&amp; opts.whitelist(req)) return next()
       opts.lookup = Array.isArray(opts.lookup) ? opts.lookup : [opts.lookup]
-      opts.onRateLimited = typeof opts.onRateLimited === &#x27;function&#x27; ? opts.onRateLimited : function (req, res, next) {
-        res.status(429).send(&#x27;Rate limit exceeded&#x27;)
+      opts.onRateLimited = typeof opts.onRateLimited === 'function' ? opts.onRateLimited : function (req, res, next) {
+        res.status(429).send('Rate limit exceeded')
       }
       var lookups = opts.lookup.map(function (item) {
-        return item + &#x27;:&#x27; + item.split(&#x27;.&#x27;).reduce(function (prev, cur) {
+        return item + ':' + item.split('.').reduce(function (prev, cur) {
           return prev[cur]
         }, req)
-      }).join(&#x27;:&#x27;)
+      }).join(':')
       var path = opts.path || req.path
       var method = (opts.method || req.method).toLowerCase()
-      var key = &#x27;ratelimit:&#x27; + path + &#x27;:&#x27; + method + &#x27;:&#x27; + lookups
+      var key = 'ratelimit:' + path + ':' + method + ':' + lookups
       db.get(key, function (err, limit) {
-        if (err &#x26;&#x26; opts.ignoreErrors) return next()
+        if (err &amp;&amp; opts.ignoreErrors) return next()
         var now = Date.now()
         limit = limit ? JSON.parse(limit) : {
           total: opts.total,
@@ -132,39 +125,39 @@
           reset: now + opts.expire
         }
 
-        if (now &#x3e; limit.reset) {
+        if (now &gt; limit.reset) {
           limit.reset = now + opts.expire
           limit.remaining = opts.total
         }
 
         // do not allow negative remaining
         limit.remaining = Math.max(Number(limit.remaining) - 1, -1)
-        db.set(key, JSON.stringify(limit), &#x27;PX&#x27;, opts.expire, function (e) {
+        db.set(key, JSON.stringify(limit), 'PX', opts.expire, function (e) {
           if (!opts.skipHeaders) {
-            res.set(&#x27;X-RateLimit-Limit&#x27;, limit.total)
-            res.set(&#x27;X-RateLimit-Reset&#x27;, Math.ceil(limit.reset / 1000)) // UTC epoch seconds
-            res.set(&#x27;X-RateLimit-Remaining&#x27;, Math.max(limit.remaining,0))
+            res.set('X-RateLimit-Limit', limit.total)
+            res.set('X-RateLimit-Reset', Math.ceil(limit.reset / 1000)) // UTC epoch seconds
+            res.set('X-RateLimit-Remaining', Math.max(limit.remaining,0))
           }
 
-          if (limit.remaining &#x3e;= 0) return next()
+          if (limit.remaining &gt;= 0) return next()
 
           var after = (limit.reset - Date.now()) / 1000
 
-          if (!opts.skipHeaders) res.set(&#x27;Retry-After&#x27;, after)
+          if (!opts.skipHeaders) res.set('Retry-After', after)
 
           opts.onRateLimited(req, res, next)
         })
 
       })
     }
-    if (typeof(opts.lookup) === &#x27;function&#x27;) {
+    if (typeof(opts.lookup) === 'function') {
       middleware = function (middleware, req, res, next) {
         return opts.lookup(req, res, opts, function () {
           return middleware(req, res, next)
         })
       }.bind(this, middleware)
     }
-    if (opts.method &#x26;&#x26; opts.path) app[opts.method](opts.path, middleware)
+    if (opts.method &amp;&amp; opts.path) app[opts.method](opts.path, middleware)
     return middleware
   }
 }</pre></li>
@@ -213,3 +206,4 @@
     ]
 </div>
 </div>
+</body></html>
