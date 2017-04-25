@@ -1,6 +1,6 @@
 # npmdoc-express-limiter
 
-#### api documentation for  [express-limiter (v1.6.0)](https://github.com/ded/express-limiter)  [![npm package](https://img.shields.io/npm/v/npmdoc-express-limiter.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-express-limiter) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-express-limiter.svg)](https://travis-ci.org/npmdoc/node-npmdoc-express-limiter)
+#### basic api documentation for  [express-limiter (v1.6.0)](https://github.com/ded/express-limiter)  [![npm package](https://img.shields.io/npm/v/npmdoc-express-limiter.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-express-limiter) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-express-limiter.svg)](https://travis-ci.org/npmdoc/node-npmdoc-express-limiter)
 
 #### rate limiter middleware for express applications
 
@@ -63,7 +63,8 @@
     "scripts": {
         "test": "make test"
     },
-    "version": "1.6.0"
+    "version": "1.6.0",
+    "bin": {}
 }
 ```
 
